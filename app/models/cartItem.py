@@ -13,6 +13,7 @@ class CartItem(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     cart = relationship("Cart", back_populates="items")
+    product = relationship("Product", back_populates="order_items")
 
     @property
     def total_price(self):

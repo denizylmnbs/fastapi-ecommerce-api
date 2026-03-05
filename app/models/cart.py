@@ -11,6 +11,7 @@ class Cart(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     items = relationship("CartItem", back_populates="cart")
+    user = relationship("User", back_populates="cart")
 
     @property
     def total_price(self):
