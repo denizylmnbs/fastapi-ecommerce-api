@@ -3,7 +3,7 @@ from app.database import engine, Base
 from app.models import user
 
 # 1. YENİ EKLENDİ: Yazdığımız router'ı içeri aktarıyoruz
-from app.routers import product, user, auth, category, cartItem, cart
+from app.routers import product, user, auth, category, cart, cartItem
 
 Base.metadata.create_all(bind=engine)
 
@@ -18,8 +18,8 @@ app.include_router(user.router)
 app.include_router(auth.router)
 app.include_router(product.router)
 app.include_router(category.router)
-app.include_router(cartItem.router)
 app.include_router(cart.router)
+app.include_router(cartItem.router)
 
 @app.get("/")
 def read_root():
