@@ -14,8 +14,10 @@ router = APIRouter(
 @router.post("/", response_model=user_schema.UserResponse, status_code=status.HTTP_201_CREATED)
 def create_user(user: user_schema.UserCreate, db: Session = Depends(get_db)):
     db_user = user_crud.get_user_by_email(db, email=user.email)
+
     if db_user:
-        raise HTTPException(status_code=400, detail="Email zaten kayıtlı")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="There is a user with this email already")
+    
     return user_crud.create_user(db=db, user=user)
 
 @router.get("/me", response_model=user_schema.UserResponse)

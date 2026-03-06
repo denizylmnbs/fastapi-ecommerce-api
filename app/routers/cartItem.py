@@ -47,3 +47,14 @@ def delete_cart_item(cart_item_id: int, db: Session = Depends(get_db), current_u
         raise HTTPException(status_code=404, detail="Sepet öğesi bulunamadı")
     
     return {"detail": "Sepet öğesi başarıyla silindi"}
+
+@router.patch("/{cart_item_id}/increase", response_model=cart_item_schema.CartItemResponse)
+def increase_cart_item_quantity(cart_item_id: int, db: Session = Depends(get_db), current_user: user_schema.UserResponse = Depends(get_current_user)):
+    if current_user is None:
+        raise HTTPException(status_code=401, detail="Kullanıcı doğrulanamadı")
+
+    updated_cart_item = cart_item_crud.increase_cart_item_quantity(db=db, cart_item_id=cart_item_id)
+    if updated_cart_item is None:
+        raise HTTPException(status_code=404, detail="Sepet öğesi bulunamadı")
+    
+    return updated_cart_item
