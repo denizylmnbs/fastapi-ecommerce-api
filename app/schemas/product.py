@@ -1,7 +1,10 @@
+from __future__ import annotations
 from pydantic import BaseModel, Field
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
 from datetime import datetime
-from app.schemas.category import CategoryResponse
+
+if TYPE_CHECKING:
+    from app.schemas.category import CategoryResponse
 
 class ProductBase(BaseModel):
     name: str
@@ -17,7 +20,10 @@ class ProductResponse(ProductBase):
     stock: int
     created_at: datetime
     updated_at: Optional[datetime] = None
-    category: Optional[CategoryResponse] = None
+    category: Optional["CategoryResponse"] = None
 
     class Config:
         from_attributes = True
+
+from app.schemas.category import CategoryResponse
+ProductResponse.model_rebuild() # This is necessary because we blocked the circular import with TYPE_CHECKİNG
