@@ -16,5 +16,5 @@ class CartItem(Base):
     product = relationship("Product", back_populates="order_items")
 
     @property
-    def total_price(self):
+    def item_total_price(self):
         return self.product.price * self.quantity
