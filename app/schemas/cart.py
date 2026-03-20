@@ -1,5 +1,6 @@
 from pydantic import BaseModel
-from datetime import datetime
+from typing import List
+from app.schemas.cartItem import CartItemResponse
 
 class CartBase(BaseModel):
     pass
@@ -9,7 +10,9 @@ class CartCreate(CartBase):
 
 class CartResponse(CartBase):
     id: int
-    created_at: datetime
+    user_id: int    
+    items: List[CartItemResponse]
+    total_price: float
 
     class Config:
         from_attributes = True

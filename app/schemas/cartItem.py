@@ -1,9 +1,9 @@
-from pydantic import BaseModel
-from datetime import datetime
+from pydantic import BaseModel, Field
+from app.schemas.product import ProductResponse
 
 class CartItemBase(BaseModel):
     product_id: int
-    quantity: int = 1
+    quantity: int = Field(1, ge=1)
 
 class CartItemCreate(CartItemBase):
     pass
@@ -11,7 +11,8 @@ class CartItemCreate(CartItemBase):
 class CartItemResponse(CartItemBase):
     id: int
     cart_id: int
-    created_at: datetime
+    product: ProductResponse
+    item_total_price: float
 
     class Config:
         from_attributes = True

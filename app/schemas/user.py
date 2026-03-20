@@ -4,7 +4,8 @@ from datetime import datetime
 
 class UserBase(BaseModel):
     email: str
-    full_name: Optional[str] = None
+    name: str
+    surname: str
 
 class UserCreate(UserBase):
     password: str = Field(min_length=8, description="Password must be at least 8 characters long")
