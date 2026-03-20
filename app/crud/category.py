@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 from app.models.category import Category
 from app.schemas.category import CategoryCreate, CategoryResponse
 

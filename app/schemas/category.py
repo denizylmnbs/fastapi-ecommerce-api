@@ -14,7 +14,7 @@ class CategoryCreate(CategoryBase):
     pass
 
 class CategoryResponse(CategoryBase):
-    items: List["ProductResponse"] = []
+    products: List["ProductResponse"] = []
 
     class Config:
         from_attributes = True

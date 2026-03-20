@@ -46,7 +46,8 @@ def update_category(category_id: int, category: category_schema.CategoryCreate, 
         raise HTTPException(status_code=404, detail="Kategori bulunamadı")
     
     db_category.name = category.name
-    
+    db_category.description = category.description
+
     db.commit()
     db.refresh(db_category)
     

@@ -12,23 +12,23 @@ router = APIRouter(
     tags=["cart"]
 )
 
-@router.post("/", response_model=cart_schema.CartResponse)
+@router.post("/", response_model=cart_schema.CartResponse, status_code=201)
 def create_cart(cart: cart_schema.CartCreate, db: Session = Depends(get_db), current_user: user_schema.UserResponse = Depends(get_current_user)):
     if current_user is None:
         raise HTTPException(status_code=401, detail="Kullanıcı doğrulanamadı")
     
-    existing_cart = cart_crud.get_cart(db, user_id=current_user.id)
+    existing_cart = cart_crud.get_cart(db, user=current_user)
     if existing_cart:
         raise HTTPException(status_code=400, detail="Kullanıcının zaten bir sepeti var")
     
-    return cart_crud.create_cart(db=db, cart=cart, user_id=current_user.id)
+    return cart_crud.create_cart(db=db, user=current_user)
 
 @router.get("/", response_model=cart_schema.CartResponse)
 def get_cart(db: Session = Depends(get_db), current_user: user_schema.UserResponse = Depends(get_current_user)):
     if current_user is None:
         raise HTTPException(status_code=401, detail="Kullanıcı doğrulanamadı")
     
-    db_cart = cart_crud.get_cart(db, user_id=current_user.id)
+    db_cart = cart_crud.get_cart(db, user=current_user)
     if db_cart is None:
         raise HTTPException(status_code=404, detail="Sepet bulunamadı")
     

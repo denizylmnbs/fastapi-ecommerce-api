@@ -20,7 +20,7 @@ class ProductResponse(ProductBase):
     stock: int
     created_at: datetime
     updated_at: Optional[datetime] = None
-    category: Optional["CategoryResponse"] = None
+    #category: Optional["CategoryResponse"] = None
 
     class Config:
         from_attributes = True

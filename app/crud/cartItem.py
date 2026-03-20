@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from app.models.cart import Cart
 from app.models.user import User
+from app.models.product import Product
 from app.models.cartItem import CartItem
 from app.schemas.cartItem import CartItemCreate, CartItemResponse
 
@@ -48,3 +49,9 @@ def increase_cart_item_quantity(db: Session, cart_item_id: int):
         db.refresh(cart_item)
         return cart_item
     return None
+
+def check_stock_availability(db: Session, product_id: int, quantity: int):
+    product = db.query(Product).filter(Product.id == product_id).first()
+    if product and product.stock >= quantity:
+        return True
+    return False
